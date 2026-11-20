@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuários - Sistema de Biblioteca</title><link rel="stylesheet" th:href="@{/css/site.css}">
+</head>
+<body><main class="container">
+    <header class="cabecalho"><h1>Cadastro de usuários</h1><p>Cadastre as pessoas que utilizam a biblioteca.</p></header>
+    <section class="painel"><h2>Novo usuário</h2>
+        <form th:action="@{/usuarios/cadastrar}" th:object="${usuario}" method="post" class="formulario">
+            <label for="nome">Nome</label><input id="nome" type="text" th:field="*{nome}" placeholder="Digite o nome completo" required>
+            <label for="email">E-mail</label><input id="email" type="email" th:field="*{email}" placeholder="exemplo@email.com" required>
+            <label for="telefone">Telefone</label><input id="telefone" type="tel" th:field="*{telefone}" placeholder="Digite o telefone" required>
+            <button type="submit">Cadastrar usuário</button>
+        </form>
+    </section>
+    <section class="painel"><h2>Usuários cadastrados</h2>
+        <p class="vazio" th:if="${#lists.isEmpty(usuarios)}">Ainda não há usuários cadastrados.</p>
+        <div class="tabela-area" th:unless="${#lists.isEmpty(usuarios)}"><table><thead><tr><th>Nome</th><th>E-mail</th><th>Telefone</th></tr></thead><tbody>
+            <tr th:each="item : ${usuarios}"><td th:text="${item.nome}"></td><td th:text="${item.email}"></td><td th:text="${item.telefone}"></td></tr>
+        </tbody></table></div>
+    </section>
+    <a class="voltar" th:href="@{/}">Voltar ao menu principal</a>
+</main></body></html>

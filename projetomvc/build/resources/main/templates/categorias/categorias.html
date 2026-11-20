@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categorias - Sistema de Biblioteca</title><link rel="stylesheet" th:href="@{/css/site.css}">
+</head>
+<body><main class="container">
+    <header class="cabecalho"><h1>Cadastro de categorias</h1><p>Organize os livros por categoria.</p></header>
+    <section class="painel"><h2>Nova categoria</h2>
+        <form th:action="@{/categorias/cadastrar}" th:object="${categoria}" method="post" class="formulario">
+            <label for="nome">Nome</label><input id="nome" type="text" th:field="*{nome}" placeholder="Ex.: Romance" required>
+            <label for="descricao">Descrição</label><textarea id="descricao" th:field="*{descricao}" placeholder="Descreva a categoria" required></textarea>
+            <button type="submit">Cadastrar categoria</button>
+        </form>
+    </section>
+    <section class="painel"><h2>Categorias cadastradas</h2>
+        <p class="vazio" th:if="${#lists.isEmpty(categorias)}">Ainda não há categorias cadastradas.</p>
+        <div class="tabela-area" th:unless="${#lists.isEmpty(categorias)}"><table><thead><tr><th>Nome</th><th>Descrição</th></tr></thead><tbody>
+            <tr th:each="item : ${categorias}"><td th:text="${item.nome}"></td><td th:text="${item.descricao}"></td></tr>
+        </tbody></table></div>
+    </section>
+    <a class="voltar" th:href="@{/}">Voltar ao menu principal</a>
+</main></body></html>

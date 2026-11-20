@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Empréstimos - Sistema de Biblioteca</title><link rel="stylesheet" th:href="@{/css/site.css}">
+</head>
+<body><main class="container">
+    <header class="cabecalho"><h1>Cadastro de empréstimos</h1><p>Registre os empréstimos realizados na biblioteca.</p></header>
+    <section class="painel"><h2>Novo empréstimo</h2>
+        <form th:action="@{/emprestimos/cadastrar}" th:object="${emprestimo}" method="post" class="formulario">
+            <label for="livro">Livro</label><input id="livro" type="text" th:field="*{livro}" placeholder="Digite o título do livro" required>
+            <label for="usuario">Usuário</label><input id="usuario" type="text" th:field="*{usuario}" placeholder="Digite o nome do usuário" required>
+            <label for="dataEmprestimo">Data do empréstimo</label><input id="dataEmprestimo" type="date" th:field="*{dataEmprestimo}" required>
+            <label for="dataDevolucao">Data prevista para devolução</label><input id="dataDevolucao" type="date" th:field="*{dataDevolucao}" required>
+            <button type="submit">Cadastrar empréstimo</button>
+        </form>
+    </section>
+    <section class="painel"><h2>Empréstimos cadastrados</h2>
+        <p class="vazio" th:if="${#lists.isEmpty(emprestimos)}">Ainda não há empréstimos cadastrados.</p>
+        <div class="tabela-area" th:unless="${#lists.isEmpty(emprestimos)}"><table><thead><tr><th>Livro</th><th>Usuário</th><th>Data do empréstimo</th><th>Devolução</th></tr></thead><tbody>
+            <tr th:each="item : ${emprestimos}"><td th:text="${item.livro}"></td><td th:text="${item.usuario}"></td><td th:text="${item.dataEmprestimo}"></td><td th:text="${item.dataDevolucao}"></td></tr>
+        </tbody></table></div>
+    </section>
+    <a class="voltar" th:href="@{/}">Voltar ao menu principal</a>
+</main></body></html>

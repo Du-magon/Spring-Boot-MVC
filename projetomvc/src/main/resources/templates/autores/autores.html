@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autores - Sistema de Biblioteca</title><link rel="stylesheet" th:href="@{/css/site.css}">
+</head>
+<body><main class="container">
+    <header class="cabecalho"><h1>Cadastro de autores</h1><p>Cadastre os autores dos livros da biblioteca.</p></header>
+    <section class="painel"><h2>Novo autor</h2>
+        <form th:action="@{/autores/cadastrar}" th:object="${autor}" method="post" class="formulario">
+            <label for="nome">Nome</label><input id="nome" type="text" th:field="*{nome}" placeholder="Digite o nome do autor" required>
+            <label for="nacionalidade">Nacionalidade</label><input id="nacionalidade" type="text" th:field="*{nacionalidade}" placeholder="Digite a nacionalidade" required>
+            <button type="submit">Cadastrar autor</button>
+        </form>
+    </section>
+    <section class="painel"><h2>Autores cadastrados</h2>
+        <p class="vazio" th:if="${#lists.isEmpty(autores)}">Ainda não há autores cadastrados.</p>
+        <div class="tabela-area" th:unless="${#lists.isEmpty(autores)}"><table><thead><tr><th>Nome</th><th>Nacionalidade</th></tr></thead><tbody>
+            <tr th:each="item : ${autores}"><td th:text="${item.nome}"></td><td th:text="${item.nacionalidade}"></td></tr>
+        </tbody></table></div>
+    </section>
+    <a class="voltar" th:href="@{/}">Voltar ao menu principal</a>
+</main></body></html>

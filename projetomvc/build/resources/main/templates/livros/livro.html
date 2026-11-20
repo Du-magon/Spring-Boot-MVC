@@ -1,16 +1,52 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Livro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Livros - Sistema de Biblioteca</title>
+    <link rel="stylesheet" th:href="@{/css/site.css}">
 </head>
 <body>
-    <h1>Informações do Livro</h1>
+<main class="container">
+    <header class="cabecalho">
+        <h1>Cadastro de livros</h1>
+        <p>Adicione os livros que fazem parte da biblioteca.</p>
+    </header>
 
-    <p>Título: <span th:text="${livro.titulo}"></span></p>
-    <p>Autor: <span th:text="${livro.autor}"></span></p>
-    <p>ISBN: <span th:text="${livro.isbn}"></span></p>
+    <section class="painel">
+        <h2>Novo livro</h2>
+        <form th:action="@{/livros/cadastrar}" th:object="${livro}" method="post" class="formulario">
+            <label for="titulo">Título</label>
+            <input id="titulo" type="text" th:field="*{titulo}" placeholder="Digite o título do livro" required>
 
-    <a th:href="@{/livros}">Voltar</a>
+            <label for="autor">Autor</label>
+            <input id="autor" type="text" th:field="*{autor}" placeholder="Digite o nome do autor" required>
+
+            <label for="isbn">ISBN</label>
+            <input id="isbn" type="text" th:field="*{isbn}" placeholder="Digite o ISBN" required>
+
+            <button type="submit">Cadastrar livro</button>
+        </form>
+    </section>
+
+    <section class="painel">
+        <h2>Livros cadastrados</h2>
+        <p class="vazio" th:if="${#lists.isEmpty(livros)}">Ainda não há livros cadastrados.</p>
+        <div class="tabela-area" th:unless="${#lists.isEmpty(livros)}">
+            <table>
+                <thead><tr><th>Título</th><th>Autor</th><th>ISBN</th></tr></thead>
+                <tbody>
+                <tr th:each="item : ${livros}">
+                    <td th:text="${item.titulo}"></td>
+                    <td th:text="${item.autor}"></td>
+                    <td th:text="${item.isbn}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <a class="voltar" th:href="@{/}">Voltar ao menu principal</a>
+</main>
 </body>
 </html>
